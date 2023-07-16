@@ -5,6 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { refs } from './js/refs';
 import { notifyStyle } from './js/notifyStyle';
+import { showLoader, hideLoader } from './js/spinner';
 
 const lightbox = new SimpleLightbox('.section-gallery a');
 
@@ -13,25 +14,29 @@ let searchQuery = '';
 
 const fetchImages = async () => {
   try {
-    const response = await axios.get('https://pixabay.com/api/', {
-      params: {
-        key: '22737684-faaa64a0ef24c6eb802e7e4c8',
-        q: searchQuery,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-        per_page: 40,
-        page: page,
+    const response = await axios.get(
+      'https://pixabay.com/api/',
+      {
+        params: {
+          key: '22737684-faaa64a0ef24c6eb802e7e4c8',
+          q: searchQuery,
+          image_type: 'photo',
+          orientation: 'horizontal',
+          safesearch: true,
+          per_page: 40,
+          page: page,
+        },
       },
-    });
+      showLoader()
+    );
 
     const { data } = response;
     const images = data.hits;
 
     if (!searchQuery) {
-      Notify.info('Enter data to search!', notifyStyle);
-
+      Notify.info('Enter data to search!', notifyStyle, hideLoader());
       refs.searchInput.placeholder = 'What`re we looking for?';
+
       return;
     }
 
@@ -65,7 +70,7 @@ const fetchImages = async () => {
       )
       .join('');
 
-    refs.gallery.insertAdjacentHTML('beforeend', markup);
+    refs.gallery.insertAdjacentHTML('beforeend', markup, hideLoader());
 
     if (page === 1) {
       Notify.success(`Hooray! We found ${data.totalHits} images.`, notifyStyle);
@@ -83,7 +88,12 @@ const fetchImages = async () => {
 
     lightbox.refresh();
     page += 1;
-
+    // const { height: cardHeight } =
+    //   refs.gallery.firstElementChild.getBoundingClientRect();
+    // window.scrollBy({
+    //   top: cardHeight * 2,
+    //   behavior: 'smooth',
+    // });
   } catch (error) {
     Notify.failure(
       'Oops! Something went wrong. Please try again later.',
@@ -98,5 +108,6 @@ refs.form.addEventListener('submit', e => {
   page = 1;
   fetchImages();
 });
+
 
 refs.btnLoadMore.addEventListener('click', fetchImages);

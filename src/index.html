@@ -20,10 +20,21 @@
       </form>
     </div>
     <div class="container">
+      <div class="loader-spin">
+        <p class="loader-text">Loading data, please wait...</p>
+        <div class="loader"></div>
+      </div>
       <div class="section-gallery"></div>
       <button type="button" class="load-more">Load more</button>
     </div>
 
+    <button class="btn-up btn-up_hide">
+      <svg class="btn-up-icon" width="53" height="53">
+        <use href="./images/symbol-defs.svg#icon-circle-up"></use>
+      </svg>
+    </button>
+
+    <script type="module" src="./js/btn-scroll-header.js"></script>
     <script type="module" src="./index.js"></script>
   </body>
 </html>

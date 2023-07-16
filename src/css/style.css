@@ -93,3 +93,86 @@
 .load-more:is(:hover, :focus) {
   background-color: #4c8c33;
 }
+
+.loader-spin {
+  display: none;
+}
+
+.loader-text {
+  color: #ff3d00;
+  font-size: 18px;
+  text-align: center;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin: 15px auto;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after,
+.loader::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #ff3d00;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, 50%);
+  border-radius: 50%;
+}
+.loader::before {
+  left: auto;
+  right: 0;
+  background: rgb(52, 50, 50);
+  transform: translate(50%, 100%);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-up {
+		position: fixed;
+		right: 74px;
+		bottom: 40px;
+		z-index: 100;
+
+		background-color: transparent;
+		border: none;
+		outline: none;
+
+		cursor: pointer;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		transition: opacity 0.3s ease-in-out;
+		color: rgb(222, 104, 35);
+
+		opacity: 0.4;
+	}
+
+	.btn-up-icon {
+		fill: currentColor;
+	}
+
+	.btn-up_hide {
+		display: none;
+	}
+
+	.btn-up_hiding {
+		opacity: 0;
+	}
+
